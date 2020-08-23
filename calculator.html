@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+
+
+        <style type="text/css">
+            .nm-calculator{
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 500;
+                width: 800px;
+            }
+            .nm-cal{
+                width: 30%;
+                display: inline-block;
+                float: left;
+                padding: 30px 20px;
+            }
+            .nm-cal-result{
+                width: 33%;
+                display: inline-block;
+                background: #D0214B;
+                color: #fff;
+                padding: 20px;
+            }
+            .nm-clear{
+                clear: both;
+            }
+            .nmCalBudget{
+                margin-bottom: 25px;
+            }
+            .nm-small-text{
+                font-size: 12px;
+            }
+            .nm-cal-form input[type=text], .nm-result-block input[type=text]{
+                width: 78%;
+                padding: 10px 0px 10px 50px;
+                font-size: 20px;
+                border-radius: 3px;
+                border: 1px solid #CACACA;
+                margin-top: 7px;
+            }
+            .nm-cal-form input:focus, .nm-result-block input:focus{
+                outline: none !important;
+                border: 1px solid #CACACA !important;
+            }
+            .nm-radio-check{
+                background: #E8E8E8;
+                padding: 12px 10px;
+                border-radius: 3px;
+                margin: 8px 0px;
+            }
+
+            .nm-radio-check input[type="radio"] {
+                background-color: #ddd;
+                border: 2px solid #D0214B;
+                border-radius: 10px;
+                cursor: pointer;
+                display: inline-block;
+                height: 15px;
+                margin-right: 20px;
+                position: relative;
+                width: 15px;
+                outline: none;
+                z-index: 1;
+                -webkit-appearance: none;
+            }
+            .nm-radio-check input[type="radio"]:after {
+                border-radius: 25px;
+                content: '';
+                display: block;
+                height: 15px;
+                left: -2px;
+                position: relative;
+                top: -1px;
+                width: 15px;
+            }
+            .nm-radio-check input[type="radio"]:checked:after {
+                background-color: #D0214B;
+
+            }
+
+            .nm-ck-block{
+                background: #CACACA;
+                position: absolute;
+                height: 45px;
+                width: 44px;
+                border-radius: 3px;
+                margin-top: -33px;
+                margin-left: -10px;
+                z-index: 0;
+            }
+            .nm-input-icon{
+                background: #CACACA;
+                position: absolute;
+                border-radius: 3px;
+                z-index: 0;
+                padding: 10px 15px;
+                font-size: 20px;
+                margin-top: 7px;
+            }
+            .nm-cal-header{
+                margin-bottom: 25px;
+            }
+            .nm-cal-header h2{
+                margin-top: 0px;
+                margin-bottom: 5px;
+            }
+            .nm-result-block{
+                margin-bottom: 10px;
+            }
+
+            @media only screen and (max-width:500px){
+                .nm-calculator{
+                    width: 100%;
+                }
+                .nm-cal{
+                    width: 98%;
+                    display: block;
+                    float: none;
+                    padding: 5px;
+                }
+                .nm-cal-result{
+                    width: 96%;
+                    display: block;
+                    padding: 22px 0px 15px 15px;
+                }
+                .nm-cal-form input[type=text], .nm-result-block input[type=text] {
+                    width: 84%;
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="nm-calculator">
+            <div class="nm-cal">
+                <form action="" id="nmCalculator" class="nm-cal-form">
+                    <div class="nmCalBudget">
+                        <label for="nmBudget" class="nm-small-text">Your budget</label>
+                        <div class="nm-input-icon">&pound;</div>
+                        <input type="text" id="nmBudget" onkeyup="nmUserBudget()" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                    </div>
+
+                    <div class="nmCalDuration">
+                        <p class="nm-small-text">Selece no. of month for payment plan*</p>
+                        <div class="nm-radio-check">
+                            <input id="nmMonth3" type="radio" name="nmMonth" value="3" onclick ="nmDur3()"/>
+                            <div class="nm-ck-block"></div>
+                            <label for="nmMonth3">3 Months</label>
+                        </div>
+                        <div class="nm-radio-check">
+                            <input id="nmMonth6" type="radio" name="nmMonth" value="6" onclick ="nmDur6()"/>
+                            <div class="nm-ck-block"></div>
+                            <label for="nmMonth6">6 Months</label>
+                        </div>
+                        <div class="nm-radio-check">
+                            <input id="nmMonth9" type="radio" name="nmMonth" value="9" onclick ="nmDur9()"/>
+                            <div class="nm-ck-block"></div>
+                            <label for="nmMonth9">9 Months</label>
+                        </div>
+                        <div class="nm-radio-check">
+                            <input id="nmMonth12" type="radio" name="nmMonth" value="12" onclick ="nmDur12()"/>
+                            <div class="nm-ck-block"></div>
+                            <label for="nmMonth12">12 Months</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="nm-cal-result">
+                <div class="nm-cal-header">
+                    <h2>Your Payment Plan</h2>
+                    <span class="nm-small-text">(Representative example)</span>
+                </div>
+                <div class="nm-result-block">
+                    <label for="nmBudgetCalRes" class="nm-small-text">Initial deposit (fixed 25%)</label>
+                    <div class="nm-input-icon">&pound;</div>
+                    <input type="text" id="nmBudgetCalRes" value="" readonly>
+                </div>
+                <div class="nm-result-block">
+                    <label for="nmMonPayRes" class="nm-small-text">Monthly Payment</label>
+                    <div class="nm-input-icon">&pound;</div>
+                    <input type="text" id="nmMonPayRes" value="" readonly>
+                </div>
+                <div class="nm-result-block">
+                    <label for="nmMonPayRes" class="nm-small-text">Duration</label>
+                    <div class="nm-input-icon" style="padding: 10px 12px;">&#x02295;</div>
+                    <input type="text" id="nmDurationRes" value="" readonly>
+                </div>
+            </div>
+            <div class="nm-clear"></div>
+        </div>
+
+
+        <script type="text/javascript">
+            // User Budget
+            function nmUserBudget() {
+                var userPay = document.getElementById('nmBudget').value;
+                var userPayCalculate = (userPay / 100) * 25;
+                document.getElementById('nmBudgetCalRes').value = userPayCalculate;
+            }
+
+            // Duration 3
+            function nmDur3() {
+                var nmDur3 = document.getElementById('nmMonth3').value;
+                var nmMainPayment = document.getElementById('nmBudget').value;
+                var nmDepos = document.getElementById('nmBudgetCalRes').value;
+                var nmMontPay = (nmMainPayment - nmDepos) / 3;
+
+
+                //console.log(nmDur3);
+
+                if (nmDepos === null || nmDepos === '') {
+                    document.getElementById('nmMonPayRes').value = 0;
+                    document.getElementById('nmDurationRes').value = '3 months';
+                } else {
+                    document.getElementById('nmMonPayRes').value = nmMontPay;
+                    document.getElementById('nmDurationRes').value = '3 months';
+                }
+            }
+
+            function nmDur6() {
+                var nmDur6 = document.getElementById('nmMonth6').value;
+                var nmMainPayment = document.getElementById('nmBudget').value;
+                var nmDepos = document.getElementById('nmBudgetCalRes').value;
+                var nmMontPay = (nmMainPayment - nmDepos) / 6;
+
+                if (nmDepos === null || nmDepos === '') {
+                    document.getElementById('nmMonPayRes').value = 0;
+                    document.getElementById('nmDurationRes').value = '6 months';
+                } else {
+                    document.getElementById('nmMonPayRes').value = nmMontPay;
+                    document.getElementById('nmDurationRes').value = '6 months';
+                }
+            }
+
+            function nmDur9() {
+                var nmDur9 = document.getElementById('nmMonth9').value;
+                var nmMainPayment = document.getElementById('nmBudget').value;
+                var nmDepos = document.getElementById('nmBudgetCalRes').value;
+                var nmMontPay = (nmMainPayment - nmDepos) / 9;
+
+                if (nmDepos === null || nmDepos === '') {
+                    document.getElementById('nmMonPayRes').value = 0;
+                    document.getElementById('nmDurationRes').value = '9 months';
+                } else {
+                    document.getElementById('nmMonPayRes').value = nmMontPay;
+                    document.getElementById('nmDurationRes').value = '9 months';
+                }
+            }
+
+            function nmDur12() {
+                var nmDur12 = document.getElementById('nmMonth12').value;
+                var nmMainPayment = document.getElementById('nmBudget').value;
+                var nmDepos = document.getElementById('nmBudgetCalRes').value;
+                var nmMontPay = (nmMainPayment - nmDepos) / 12;
+
+                if (nmDepos === null || nmDepos === '') {
+                    document.getElementById('nmMonPayRes').value = 0;
+                    document.getElementById('nmDurationRes').value = '12 months';
+                } else {
+                    document.getElementById('nmMonPayRes').value = nmMontPay;
+                    document.getElementById('nmDurationRes').value = '12 months';
+                }
+            }
+
+
+        </script>
+
+
+
+
+    </body>
+</html>
